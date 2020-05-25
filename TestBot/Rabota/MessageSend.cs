@@ -12,6 +12,25 @@ namespace TestBot.Rabota
 {
     class MessageSend
     {
+        public void SendLog(string Message)
+        {
+            var danni = new HttpRequest();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+            danni.UserAgent = Http.FirefoxUserAgent();
+
+            RequestParams reqParams = new RequestParams();
+            reqParams["message"] = Message;
+            reqParams["peer_id"] = 2000000002; //+1
+            reqParams["dont_parse_links"] = 0;
+            reqParams["forward_messages"] = "";
+            reqParams["access_token"] = Variables.Token;
+            reqParams["v"] = Variables.v;
+            string response = danni.Post("https://api.vk.com/method/messages.send?", reqParams).ToString();
+
+            Random rn = new Random();
+            
+        }
         public void Send(string Message, string Media = "")
         {
             var danni = new HttpRequest();
@@ -21,7 +40,7 @@ namespace TestBot.Rabota
 
             RequestParams reqParams = new RequestParams();
             reqParams["message"] = Message;
-            reqParams["peer_id"] = Variables.IdPolsBes;
+            reqParams["peer_id"] = Variables.IdPolsBes; //+1
             reqParams["dont_parse_links"] = 0;
             reqParams["attachment"] = Media;
             reqParams["forward_messages"] = "";
@@ -30,14 +49,14 @@ namespace TestBot.Rabota
             string response = danni.Post("https://api.vk.com/method/messages.send?", reqParams).ToString();
 
             Random rn = new Random();
-            Thread.Sleep(rn.Next(2000, 3000));
+            Thread.Sleep(rn.Next(1000, 2000));
 
             if(response.Contains("error"))
             {
                 JObject json = JObject.Parse(response);
                 if (Convert.ToInt32(json["error"]["error_code"]) == 14)
                 {
-                    Rucaptcha.Key = Variables.RucaptchKey;
+                    
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine($@"Капча, решаем");
                     string captcha_key = CaptchaOk(json["error"]["captcha_img"].ToString());
@@ -64,7 +83,7 @@ namespace TestBot.Rabota
         {
             var danni = new HttpRequest();
             danni.Get(LinkImage).ToFile("captcha.jpg");
-            return Rucaptcha.Recognize("captcha.jpg");
+            return "";
         }
 
     }

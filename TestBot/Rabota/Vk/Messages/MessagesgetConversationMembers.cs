@@ -15,10 +15,10 @@ namespace TestBot.Rabota.Vk.Messages
        public static HttpRequest request = new HttpRequest();
         public static string GetUserMessage()
         {
-
+            
             Rabota.MessageSend MesSend = new Rabota.MessageSend();
             RequestParams reqParams = new RequestParams();
-            reqParams["peer_id"] = Variables.IdPolsBes;
+            reqParams["peer_id"] = 2000000003;
             reqParams["fields"] = "id";
             reqParams["access_token"] = Variables.Token;
             reqParams["v"] = Variables.v;
@@ -65,7 +65,8 @@ namespace TestBot.Rabota.Vk.Messages
 
 
                     string pidor = IDs[new Random().Next(0, IDs.Length)];
-                    Users.UsersGetVk.Get(pidor);
+                    return pidor;
+
                 }
 
             }
@@ -73,10 +74,11 @@ namespace TestBot.Rabota.Vk.Messages
             return "";
         }
 
-        public static string helpme()
+       
+        public static string ciroz()
         {
             Rabota.MessageSend MesSend = new Rabota.MessageSend();
-            MesSend.Send("Доступны следующие команды:" + "\n" + "1. Помощь (для вызовы помощи)" + "\n" + "2. Я пидорас? - Узнать пидорас ли вы" + "\n" + "3. Найти пидора - Найти пидора в этой беседе" + "\n" + "4. Xачу мем - показать мемчик" + "\n" + "5. Хачу видео - показать видос" + "\n" + "6. Онлайн арп - показать онлайн Arizona RP" + "\n" + "7. Онлайн дрп - показать онлайн Diamond RP" + "\n" + "8. Топ сервера - вывести топ серверов");
+            MesSend.Send("");
             return "";
         }
     }

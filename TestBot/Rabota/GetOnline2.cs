@@ -17,6 +17,7 @@ namespace TestBot.Rabota
     class Program2
     {
         public static string response1;
+        public bool on = true;
         public static string response2;
         public static string response3;
         public static string response4;
@@ -26,16 +27,17 @@ namespace TestBot.Rabota
         public static string response8;
         public static string response9;
         public static string response10;
-        public static string Surprise;
-        public static string Scottdale;
-        public static string SaintRose;
-        public static string RedRock;
-        public static string Chandler;
-        public static string Mesa;
-        public static string Phoenix;
-        public static string Tucson;
-        public static string Yuma;
-        public static string Brainburg;
+        public static string richi = "1";
+        public static string nemesis = "1";
+        public static string elevator = "1";
+        public static string elevator1 = "1";
+        public static string elevator2 = "1";
+        public static string rofl = "1";
+        public static string docent = "1";
+        public static string nathan = "1";
+
+        public static string token = "0";
+
         public static SQLiteConnection myConnection;
         static System.Threading.Timer timer;
 
@@ -48,7 +50,7 @@ namespace TestBot.Rabota
 
 
             var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromMinutes(5);
+            var periodTimeSpan = TimeSpan.FromSeconds(60);
 
             timer = new System.Threading.Timer((e) =>
             {
@@ -69,89 +71,43 @@ namespace TestBot.Rabota
         {
             await Task.Run(() =>
             {
-                GetOnlineSurprise();
-                GetOnlineScottdale();
-                GetOnlineSaintRose();
-                GetOnlineChandler();
-                GetOnlineRedRock();
-                GetOnlineMesa();
-                GetOnlineTucson();
-                GetOnlinePhoenix();
-                GetOnlineYuma();
-                GetOnlineBrainburg();
+                myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
 
-
-
-                myConnection = new SQLiteConnection("Data Source=database.sqlite3");
-
-                if (!File.Exists("./database.sqlite3"))
+                if (!File.Exists("./tte_bot.sqlite3"))
                 {
 
 
-                    SQLiteConnection.CreateFile("database.sqlite3");
+                    SQLiteConnection.CreateFile("tte_bot.sqlite3");
                 }
-                string query = "UPDATE online1 SET online = @Surprise WHERE name = 'Surprise'; UPDATE online1 SET online = @Scottdale WHERE name = 'Scottdale'; UPDATE online1 SET online = @SaintRose WHERE name = 'SaintRose'; UPDATE online1 SET online = @RedRock WHERE name = 'RedRock'; UPDATE online1 SET online = @Chandler WHERE name = 'Chandler'; UPDATE online1 SET online = @Phoenix WHERE name = 'Phoenix'; UPDATE online1 SET online = @Tucson WHERE name = 'Tucson'; UPDATE online1 SET online = @Yuma WHERE name = 'Yuma'; UPDATE online1 SET online = @Brainburg WHERE name = 'Brainburg'";
+                string query = "UPDATE online SET live = @richi WHERE name = 'richi'; UPDATE online SET live = @nemesis WHERE name = 'nemesis'; UPDATE online SET live = @elevator WHERE name = 'elevator'; UPDATE online SET live = @elevator1 WHERE name = 'elevator1'; UPDATE online SET live = @elevator2 WHERE name = 'elevator2'; UPDATE online SET live = @rofl WHERE name = 'rofl'; UPDATE online SET live = @docent WHERE name = 'docent'; UPDATE online SET live = @nathan WHERE name = 'nathan'";
                 SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
                 myConnection.Open();
-                myCommand.Parameters.AddWithValue("@Surprise", Surprise);
-                myCommand.Parameters.AddWithValue("@Scottdale", Scottdale);
-                myCommand.Parameters.AddWithValue("@SaintRose", SaintRose);
-                myCommand.Parameters.AddWithValue("@RedRock", RedRock);
-                myCommand.Parameters.AddWithValue("@Chandler", Chandler);
-                myCommand.Parameters.AddWithValue("@Phoenix", Phoenix);
-                myCommand.Parameters.AddWithValue("@Tucson", Tucson);
-                myCommand.Parameters.AddWithValue("@Yuma", Yuma);
-                myCommand.Parameters.AddWithValue("@Brainburg", Brainburg);
+                myCommand.Parameters.AddWithValue("@richi", richi);
+                myCommand.Parameters.AddWithValue("@nemesis", nemesis);
+                myCommand.Parameters.AddWithValue("@elevator", elevator);
+                myCommand.Parameters.AddWithValue("@elevator1", elevator1);
+                myCommand.Parameters.AddWithValue("@elevator2", elevator2);
+                myCommand.Parameters.AddWithValue("@rofl", rofl);
+                myCommand.Parameters.AddWithValue("@docent", docent);
+                myCommand.Parameters.AddWithValue("@nathan", nathan);
                 var result = myCommand.ExecuteNonQuery();
                 myConnection.Close();
 
+                GetOnlineSurprise();
+                GetOnlineScottdale();
+                GetOnlineChandler();
+                GetOnlineChandler1();
+                GetOnlineChandler2();
+                GetOnlineChandler3();
+                GetOnlineChandler4();
+                GetOnlineChandler5();
+
+
+
+
             });
 
         }
-
-
-
-        async public static void GetOnline2()
-        {
-            await Task.Run(() =>
-            {
-                string query = "SELECT online FROM online1";
-                SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
-
-                myConnection.Open();
-
-
-                SQLiteDataReader result = myCommand.ExecuteReader();
-                var onlineList = new List<string>();
-
-
-                if (result.HasRows)
-                {
-
-                    while (result.Read())
-                    {
-
-
-                        onlineList.Add(result["online"].ToString());
-
-                        //result["online"] to string array?
-
-
-                    }
-                    onlineList.ToArray();
-                    Console.WriteLine(onlineList[0]);
-                }
-                myConnection.Close();
-                Rabota.MessageSend MesSend = new Rabota.MessageSend();
-
-
-                MesSend.Send("Surprise: " + onlineList[0] + "/1000" + "\n" + "Scottdale: " + onlineList[1] + "/1000" + "\n" + "SaintRose: " + onlineList[2] + "/1000" + "\n" + "Chandler: " + onlineList[3] + "/1000" + "\n" + "Red-Rock: " + onlineList[4] + "/1000" + "\n" + "Mesa: " + onlineList[5] + "/1000" + "\n" + "Phoenix: " + onlineList[5] + "/1000" + "\n" + "Tucson: " + onlineList[6] + "/1000" + "\n" + "Yuma: " + onlineList[7] + "/1000" + "\n" + "Brainburg: " + onlineList[8] + "/1000");
-
-            });
-        }
-
-
-
 
 
 
@@ -161,201 +117,524 @@ namespace TestBot.Rabota
         {
 
             var danni = new HttpRequest();
+            danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o"); //клиент айди
+            danni.AddHeader("Authorization", "Bearer " + token);
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+
             try
             {
-                response1 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.109&Port=7777&Format=JSON&Action=info").ToString();
+                response1 = danni.Get("https://api.twitch.tv/helix/streams?user_login=richiking").ToString();
+                JObject json = JObject.Parse(response1);
+                richi = Convert.ToString(json["data"].Count());
             }
 
             catch (Exception ex)
             {
-                Surprise = "0";
-            }
-            finally
-            {
-                JObject json = JObject.Parse(response1);
-                Surprise = (Convert.ToString(json["Players"]));
+                UpdateToken();
+                GetOnlineSurprise();
             }
 
-            return Surprise;
+            myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+            string query = "SELECT live FROM online WHERE name = 'richi'";
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+            myConnection.Open();
+
+            SQLiteDataReader result = myCommand.ExecuteReader();
+            var onlineList = new List<string>();
+
+
+            if (result.HasRows)
+            {
+
+                while (result.Read())
+                {
+
+
+                    onlineList.Add(result["live"].ToString());
+
+                    //result["online"] to string array?
+
+
+                }
+                onlineList.ToArray();
+                Console.WriteLine(onlineList[0]);
+            }
+            myConnection.Close();
+
+            if (onlineList[0] == "0")
+            {
+                if (richi == "1")
+                {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("На канале Ричи пошло развитие!" + "\n" + "https://www.twitch.tv/richiking", "photo-195044271_457239019");
+                }
+
+            }
+            return richi;
         }
         public static string GetOnlineScottdale()
         {
 
             var danni = new HttpRequest();
+            danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+            danni.AddHeader("Authorization", "Bearer " + token);
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+
             try
             {
-                response2 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.43&Port=7777&Format=JSON&Action=info").ToString();
+                response1 = danni.Get("https://api.twitch.tv/helix/streams?user_login=nemesis_tv").ToString();
+                JObject json = JObject.Parse(response1);
+                nemesis = Convert.ToString(json["data"].Count());
             }
+
             catch (Exception ex)
             {
-                Scottdale = "0";
+                UpdateToken();
+                return "";
             }
-            finally
+           
+            myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+            string query = "SELECT live FROM online WHERE name = 'nemesis'";
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+            myConnection.Open();
+
+            SQLiteDataReader result = myCommand.ExecuteReader();
+            var onlineList = new List<string>();
+
+
+            if (result.HasRows)
             {
 
-                JObject json = JObject.Parse(response2);
-                Scottdale = (Convert.ToString(json["Players"]));
-            }
-            return Scottdale;
-        }
-        public static string GetOnlineSaintRose()
-        {
+                while (result.Read())
+                {
 
-            var danni = new HttpRequest();
-            try
-            {
-                response3 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.5&Port=7777&Format=JSON&Action=info").ToString();
+
+                    onlineList.Add(result["live"].ToString());
+
+                    //result["online"] to string array?
+
+
+                }
+                onlineList.ToArray();
+                Console.WriteLine(onlineList[0]);
             }
-            catch (Exception ex)
+            myConnection.Close();
+
+            if (onlineList[0] == "0")
             {
-                SaintRose = "0";
+                if (nemesis == "1")
+                {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("Змирля запустила поток" + "\n" + "https://www.twitch.tv/nemesis_tv", "photo-195044271_457239018");
+                }
+
             }
-            finally
-            {
-                JObject json = JObject.Parse(response3);
-                SaintRose = (Convert.ToString(json["Players"]));
-            }
-            return SaintRose;
+            return nemesis;
         }
         public static string GetOnlineChandler()
         {
 
             var danni = new HttpRequest();
+            danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+            danni.AddHeader("Authorization", "Bearer " + token);
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+
             try
             {
-                response4 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.44&Port=7777&Format=JSON&Action=info").ToString();
+                response1 = danni.Get("https://api.twitch.tv/helix/streams?user_login=nemesis_sin_gavna").ToString();
+                JObject json = JObject.Parse(response1);
+                elevator = Convert.ToString(json["data"].Count());
             }
+
             catch (Exception ex)
             {
-                Chandler = "0";
+                UpdateToken();
+                elevator = "1";
             }
-            finally
+          
+            myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+            string query = "SELECT live FROM online WHERE name = 'elevator'";
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+            myConnection.Open();
+
+            SQLiteDataReader result = myCommand.ExecuteReader();
+            var onlineList = new List<string>();
+
+
+            if (result.HasRows)
             {
-                JObject json = JObject.Parse(response4);
-                Chandler = (Convert.ToString(json["Players"]));
+
+                while (result.Read())
+                {
+
+
+                    onlineList.Add(result["live"].ToString());
+
+                    //result["online"] to string array?
+
+
+                }
+                onlineList.ToArray();
+                Console.WriteLine(onlineList[0]);
             }
-            return Chandler;
+            myConnection.Close();
+
+            if (onlineList[0] == "0")
+            {
+                if (elevator == "1")
+                {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("Некий B.V стартанул поток на твиче" + "\n" + "https://www.twitch.tv/nemesis_sin_gavna", "photo-195044271_457239022");
+                }
+
+            }
+            return elevator;
         }
-        public static string GetOnlineRedRock()
+    
+    public static string GetOnlineChandler1()
+    {
+
+        var danni = new HttpRequest();
+        danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+        danni.UserAgent = Http.OperaUserAgent();
+        danni.Cookies = new CookieDictionary();
+        danni.KeepAlive = true;
+
+        try
+        {
+               danni.Get("https://www.youtube.com/channel/UCPASCsJ6ISdHhQtv6vv5gYQ").ToString();
+        }
+
+        catch (Exception ex)
+        {
+            elevator1 = "1";
+        }
+        finally
+        {
+                string response1 = danni.Get("https://www.youtube.com/channel/UCPASCsJ6ISdHhQtv6vv5gYQ").ToString();
+                if (response1.Contains("В эфире"))
+                {
+                    elevator1 = "1";
+                }else
+                {
+                    elevator1 = "0";
+                }
+               
+            }
+        myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+        string query = "SELECT live FROM online WHERE name = 'elevator1'";
+        SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+        myConnection.Open();
+
+        SQLiteDataReader result = myCommand.ExecuteReader();
+        var onlineList = new List<string>();
+
+
+        if (result.HasRows)
+        {
+
+            while (result.Read())
+            {
+
+
+                onlineList.Add(result["live"].ToString());
+
+                //result["online"] to string array?
+
+
+            }
+            onlineList.ToArray();
+            Console.WriteLine(onlineList[0]);
+        }
+        myConnection.Close();
+
+        if (onlineList[0] == "0")
+        {
+            if (elevator1 == "1")
+            {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("Виталя вышел в эфир на ЮТУБЕ!" + "\n" + "https://www.youtube.com/channel/UCPASCsJ6ISdHhQtv6vv5gYQ", "photo-195044271_457239022");
+            }
+
+        }
+        return elevator1;
+    }
+        public static string GetOnlineChandler2()
         {
 
             var danni = new HttpRequest();
+            danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+            danni.AddHeader("Authorization", "Bearer " + token);
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+
             try
             {
-                response5 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.61&Port=7777&Format=JSON&Action=info").ToString();
+                response1 = danni.Get("https://api.twitch.tv/helix/streams?user_login=elevator_king").ToString();
+                JObject json = JObject.Parse(response1);
+                elevator2 = Convert.ToString(json["data"].Count());
             }
+
             catch (Exception ex)
             {
-                RedRock = "0";
+                UpdateToken();
+                elevator2 = "1";
             }
-            finally
+            myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+            string query = "SELECT live FROM online WHERE name = 'elevator2'";
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+            myConnection.Open();
+
+            SQLiteDataReader result = myCommand.ExecuteReader();
+            var onlineList = new List<string>();
+
+
+            if (result.HasRows)
             {
-                JObject json = JObject.Parse(response5);
-                RedRock = (Convert.ToString(json["Players"]));
+
+                while (result.Read())
+                {
+
+
+                    onlineList.Add(result["live"].ToString());
+
+                    //result["online"] to string array?
+
+
+                }
+                onlineList.ToArray();
+                Console.WriteLine(onlineList[0]);
             }
-            return RedRock;
+            myConnection.Close();
+
+            if (onlineList[0] == "0")
+            {
+                if (elevator2 == "1")
+                {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("Некий B.V стартанул поток на твиче" + "\n" + "https://www.twitch.tv/elevator_king", "photo-195044271_457239022");
+                }
+
+            }
+            return elevator2;
         }
-        public static string GetOnlineMesa()
+        public static string GetOnlineChandler3()
         {
 
             var danni = new HttpRequest();
+            danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+            danni.AddHeader("Authorization", "Bearer " + token);
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+
             try
             {
-                response6 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.59&Port=7777&Format=JSON&Action=info").ToString();
+                response1 = danni.Get("https://api.twitch.tv/helix/streams?user_login=irofl").ToString();
+                JObject json = JObject.Parse(response1);
+                rofl = Convert.ToString(json["data"].Count());
             }
+
             catch (Exception ex)
             {
-                Mesa = "0";
+                UpdateToken();
+                rofl = "1";
             }
-            finally
+           
+            myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+            string query = "SELECT live FROM online WHERE name = 'rofl'";
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+            myConnection.Open();
+
+            SQLiteDataReader result = myCommand.ExecuteReader();
+            var onlineList = new List<string>();
+
+
+            if (result.HasRows)
             {
 
-                JObject json = JObject.Parse(response6);
-                Mesa = (Convert.ToString(json["Players"]));
+                while (result.Read())
+                {
+
+
+                    onlineList.Add(result["live"].ToString());
+
+                    //result["online"] to string array?
+
+
+                }
+                onlineList.ToArray();
+                Console.WriteLine(onlineList[0]);
             }
-            return Mesa;
+            myConnection.Close();
+
+            if (onlineList[0] == "0")
+            {
+                if (rofl == "1")
+                {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("ROFL стартанул на твиче" + "\n" + "https://www.twitch.tv/irofl", "photo-195044271_457239023");
+                }
+
+            }
+            return rofl;
         }
-        public static string GetOnlinePhoenix()
+        public static string GetOnlineChandler4()
         {
 
             var danni = new HttpRequest();
+            danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+            danni.AddHeader("Authorization", "Bearer " + token);
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+
             try
             {
-                response7 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.3&Port=7777&Format=JSON&Action=info").ToString();
+                response1 = danni.Get("https://api.twitch.tv/helix/streams?user_login=cvrnvgge4444").ToString();
+                JObject json = JObject.Parse(response1);
+                docent = Convert.ToString(json["data"].Count());
             }
+
             catch (Exception ex)
             {
-                Phoenix = "0";
+                UpdateToken();
+                docent = "1";
             }
-            finally
+           
+            myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+            string query = "SELECT live FROM online WHERE name = 'docent'";
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+            myConnection.Open();
+
+            SQLiteDataReader result = myCommand.ExecuteReader();
+            var onlineList = new List<string>();
+
+
+            if (result.HasRows)
             {
 
-                JObject json = JObject.Parse(response7);
-                Phoenix = (Convert.ToString(json["Players"]));
+                while (result.Read())
+                {
+
+
+                    onlineList.Add(result["live"].ToString());
+
+                    //result["online"] to string array?
+
+
+                }
+                onlineList.ToArray();
+                Console.WriteLine(onlineList[0]);
             }
-            return Phoenix;
+            myConnection.Close();
+
+            if (onlineList[0] == "0")
+            {
+                if (docent == "1")
+                {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("DOCENT запустился на твиче" + "\n" + "https://www.twitch.tv/cvrnvgge4444/", "photo-195044271_457239024");
+                }
+
+            }
+            return docent;
         }
-        public static string GetOnlineTucson()
+        public static string GetOnlineChandler5()
         {
 
             var danni = new HttpRequest();
+            danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+            danni.AddHeader("Authorization", "Bearer " + token);
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+
             try
             {
-                response8 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.4&Port=7777&Format=JSON&Action=info").ToString();
+                response1 = danni.Get("https://api.twitch.tv/helix/streams?user_login=nathangtq").ToString();
+                JObject json = JObject.Parse(response1);
+                nathan = Convert.ToString(json["data"].Count());
             }
+
             catch (Exception ex)
             {
-                Tucson = "0";
+                UpdateToken();
+                nathan = "1";
             }
-            finally
+           
+            myConnection = new SQLiteConnection("Data Source=tte_bot.sqlite3");
+            string query = "SELECT live FROM online WHERE name = 'nathan'";
+            SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
+
+            myConnection.Open();
+
+            SQLiteDataReader result = myCommand.ExecuteReader();
+            var onlineList = new List<string>();
+
+
+            if (result.HasRows)
             {
 
-                JObject json = JObject.Parse(response8);
-                Tucson = (Convert.ToString(json["Players"]));
+                while (result.Read())
+                {
+
+
+                    onlineList.Add(result["live"].ToString());
+
+                    //result["online"] to string array?
+
+
+                }
+                onlineList.ToArray();
+                Console.WriteLine(onlineList[0]);
             }
-            return Tucson;
+            myConnection.Close();
+
+            if (onlineList[0] == "0")
+            {
+                if (nathan == "1")
+                {
+                    Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
+                    MesSend.Send("NathanGtq начал развиваться на твиче" + "\n" + "https://www.twitch.tv/nathangtq", "photo-195044271_457239025");
+                }
+
+            }
+            return nathan;
         }
-        public static string GetOnlineYuma()
+
+        public static void UpdateToken()
         {
-
             var danni = new HttpRequest();
-            try
-            {
-                response9 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.107&Port=7777&Format=JSON&Action=info").ToString();
-            }
-            catch (Exception ex)
-            {
-                Yuma = "0";
-            }
-            finally
-            {
-
-                JObject json = JObject.Parse(response9);
-                Yuma = (Convert.ToString(json["Players"]));
-            }
-            return Yuma;
+            //danni.AddHeader("Client-ID", "f7eeegwu0xe6hpa9o6ntad48i3au1o");
+            //danni.AddHeader("Authorization", "Bearer dsr51cfseqjygyuh7gjset27aeynui");
+            danni.UserAgent = Http.OperaUserAgent();
+            danni.Cookies = new CookieDictionary();
+            danni.KeepAlive = true;
+            string response = danni.Post("https://id.twitch.tv/oauth2/token?client_id=f7eeegwu0xe6hpa9o6ntad48i3au1o&client_secret=dsr51cfseqjygyuh7gjset27aeynui&grant_type=client_credentials").ToString();
+            JObject json = JObject.Parse(response);
+            token = Convert.ToString(json["access_token"]);
         }
-        public static string GetOnlineBrainburg()
-        {
 
-            var danni = new HttpRequest();
-            try
-            {
-                response10 = danni.Get("http://monitor.sacnr.com/api/?IP=185.169.134.45&Port=7777&Format=JSON&Action=info").ToString();
-            }
-            catch (Exception ex)
-            {
-                Brainburg = "0";
-            }
-            finally
-            {
 
-                JObject json = JObject.Parse(response10);
-                Brainburg = (Convert.ToString(json["Players"]));
-            }
-            return Yuma;
-        }
 
     }
+       
+
+    
 }
 

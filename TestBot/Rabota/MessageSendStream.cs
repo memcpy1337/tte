@@ -8,46 +8,36 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Threading;
 
-namespace TestBot.Rabota.Vk.Messages
+namespace TestBot.Rabota
 {
-    class SendHouse
+    class MessageSendStream
     {
-        
-        public static string Send1(string[] Razdelil)
-
-
-            
+        public void Send(string Message, string Media = "")
         {
-
-           
             var danni = new HttpRequest();
             danni.Cookies = new CookieDictionary();
             danni.KeepAlive = true;
             danni.UserAgent = Http.FirefoxUserAgent();
-            
+
             RequestParams reqParams = new RequestParams();
-             
-             string msg = String.Concat<string>(Razdelil);
-
-
-            reqParams["message"] = msg;
-            reqParams["peer_id"] = 2000000001;
+            reqParams["message"] = Message;
+            reqParams["peer_id"] = 2000000003; //+1
             reqParams["dont_parse_links"] = 0;
-            reqParams["attachment"] = "";
+            reqParams["attachment"] = Media;
             reqParams["forward_messages"] = "";
-            reqParams["access_token"] = "f6d44bc00fb13a6b680832f53d31b832dec9e875635c96e2b651bcac011ab8c212fe0c9ab7f6067c8725b";
+            reqParams["access_token"] = Variables.Token;
             reqParams["v"] = Variables.v;
             string response = danni.Post("https://api.vk.com/method/messages.send?", reqParams).ToString();
 
             Random rn = new Random();
-            Thread.Sleep(rn.Next(2000, 3000));
+            Thread.Sleep(rn.Next(1000, 2000));
 
-            if (response.Contains("error"))
+            if(response.Contains("error"))
             {
                 JObject json = JObject.Parse(response);
                 if (Convert.ToInt32(json["error"]["error_code"]) == 14)
                 {
-                    Rucaptcha.Key = Variables.RucaptchKey;
+                    
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine($@"Капча, решаем");
                     string captcha_key = CaptchaOk(json["error"]["captcha_img"].ToString());
@@ -55,28 +45,26 @@ namespace TestBot.Rabota.Vk.Messages
 
 
                     reqParams = new RequestParams();
-                    reqParams["message"] = "";
+                    reqParams["message"] = Message;
                     reqParams["captcha_key"] = captcha_key;
                     reqParams["message"] = json["error"]["captcha_sid"].ToString();
-                    reqParams["peer_id"] = 2000000109;
-                    reqParams["attachment"] = "";
+                    reqParams["peer_id"] = Variables.IdPolsBes;
+                    reqParams["attachment"] = Media;
                     reqParams["forward_messages"] = Variables.IdMes;
                     reqParams["access_token"] = Variables.Token;
                     reqParams["v"] = Variables.v;
                     response = danni.Post("https://api.vk.com/method/messages.send?", reqParams).ToString();
 
-                    return "";
-                }
-                return "";
-            }
-            return "";
-        }
 
+                }
+            }
+        }
+        
         private static string CaptchaOk(string LinkImage)
         {
             var danni = new HttpRequest();
             danni.Get(LinkImage).ToFile("captcha.jpg");
-            return Rucaptcha.Recognize("captcha.jpg");
+            return "";
         }
 
     }

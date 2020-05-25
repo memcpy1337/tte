@@ -12,8 +12,8 @@ namespace TestBot
         static void Main(string[] args)
         {
            
-            Rabota.Program.GetTimer();
-            Rabota.Program2.GetTimer1();
+            //Rabota.Program.GetTimer();
+            //Rabota.Program2.GetTimer1();
             Rabota.LongPollServer.zaprossLongPoll();
             
             

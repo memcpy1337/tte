@@ -29,10 +29,12 @@ namespace TestBot.Rabota
                 if (response.Contains("failed"))
                 {
                     getLongPollServer();
+                    Console.WriteLine("Failed");
                 }
                 if (response.Contains("error"))
                 {
                     getLongPollServer();
+                    Console.WriteLine("Failed");
                 }
 
                 Danni = new string[]
@@ -69,6 +71,7 @@ namespace TestBot.Rabota
             catch (Exception ex)
             {
                 zaprossLongPoll();
+                Console.WriteLine(ex);
             }
             finally
             {
@@ -85,19 +88,20 @@ namespace TestBot.Rabota
                 string response;
                 try
                 {
-                   danni.Get($"{server}?act=a_check&key={key}&ts={ts}&wait=25").ToString();
+                    danni.Get($"{server}?act=a_check&key={key}&ts={ts}&wait=25").ToString();
+                    Console.WriteLine("Try");
                 }
                 catch (Exception ex)
                 {
                     zaprossLongPoll();
+                    Console.WriteLine(ex);
                 }
                 finally
                 {
                     response = danni.Get($"{server}?act=a_check&key={key}&ts={ts}&wait=25").ToString();
+                    Console.WriteLine("Finally");
                 }
-
-
-
+              
                 JObject json = JObject.Parse(response);
 
                 if (response.Contains("failed"))
@@ -118,7 +122,7 @@ namespace TestBot.Rabota
                                 if (Convert.ToString(json["updates"][i]["object"]["action"]["type"]) == "chat_invite_user")
                                 {
 
-                                    if (Convert.ToString(json["updates"][i]["object"]["action"]["member_id"]) == "-185711407")
+                                    if (Convert.ToString(json["updates"][i]["object"]["action"]["member_id"]) == "-195044271")
                                     {
                                         int id_beseda = Convert.ToInt32(json["updates"][i]["object"]["peer_id"]);
                                         Rabota.AddedToBeseda.AddMe(id_beseda);
@@ -146,7 +150,7 @@ namespace TestBot.Rabota
                                 Rabota.Command Command = new Rabota.Command();
                                 Rabota.Varb Vb = new Rabota.Varb();
                                 Vb.SettText();
-                                Command.Obrabot();
+                                Command.Obrabot(Variables.IdPols);
 
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine($@"1. ID пользователя: {Variables.IdPols}. {"\n"}2. id беседы: {Variables.IdPolsBes}. {"\n"}3. id сообщений: {Variables.IdMes}. {"\n"}4. Время сообщения: {Variables.Time}. {"\n"}5. Сообщение: {Variables.Title}");

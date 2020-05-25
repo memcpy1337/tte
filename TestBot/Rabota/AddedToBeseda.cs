@@ -24,10 +24,10 @@ namespace TestBot.Rabota
             danni.UserAgent = Http.FirefoxUserAgent();
 
             RequestParams reqParams = new RequestParams();
-            reqParams["message"] = "Здарова! Вы пригласили меня в беседу, но для работы необходимо выдать мне права администратора." + "\n" + "Для этого нажмите на название беседы и кликните по кнопке «Назначить администратором» напротив «SAMP BOT»." + "\n" + "Чтобы узнать список доступных команд введи «помощь»";
+            reqParams["message"] = "Здарёва!";
             reqParams["peer_id"] = id_beseda;
             reqParams["dont_parse_links"] = 0;
-            reqParams["attachment"] = "photo-185711407_457239065";
+            //reqParams["attachment"] = "photo-185711407_457239065";
             reqParams["forward_messages"] = "";
             reqParams["access_token"] = Variables.Token;
             reqParams["v"] = Variables.v;
