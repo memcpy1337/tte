@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using xNet;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Threading;
+
 namespace TestBot.Rabota
 {
     class LongPollServer
@@ -21,10 +23,10 @@ namespace TestBot.Rabota
             {
                 string response = danni.Get("https://api.vk.com/method/"
                     + "groups.getLongPollServer" + "?"
-                    + "&" + "group_id=" + Variables.GroupId
+                    + "&" + "group_id=" + Variables_Static.GroupId
                     + "&" + "lp_version=" + 3
-                    + "&" + "access_token=" + Variables.Token
-                    + "&" + "v=" + Variables.v).ToString();
+                    + "&" + "access_token=" + Variables_Static.Token
+                    + "&" + "v=" + Variables_Static.v).ToString();
                 JObject json = JObject.Parse(response);
                 if (response.Contains("failed"))
                 {
@@ -139,21 +141,25 @@ namespace TestBot.Rabota
                             {
 
 
-                                Variables.IdMes = Convert.ToInt32(json["updates"][i]["object"]["id"]);
-                                Variables.Time = Convert.ToInt32(json["updates"][i]["object"]["date"]);
-                                Variables.Title = json["updates"][i]["object"]["text"].ToString();
+                                Variables data = new Variables();
+                                data.IdMes = Convert.ToInt32(json["updates"][i]["object"]["conversation_message_id"]);
+                                data.Time = Convert.ToInt32(json["updates"][i]["object"]["date"]);
+                                data.Title = json["updates"][i]["object"]["text"].ToString();
                                 int[] Razdelit = ExtraFunction.SettingDanniEf.SettingDanniBeseda(Convert.ToInt32(json["updates"][i]["object"]["from_id"]), Convert.ToInt32(json["updates"][i]["object"]["peer_id"]));
 
-                                Variables.IdPols = Razdelit[1];
-                                Variables.IdPolsBes = Razdelit[0];
+                                data.IdPols = Razdelit[1];
+                                data.IdPolsBes = Razdelit[0];
+
 
                                 Rabota.Command Command = new Rabota.Command();
                                 Rabota.Varb Vb = new Rabota.Varb();
-                                Vb.SettText();
-                                Command.Obrabot(Variables.IdPols);
+                                Vb.SettText(data);
+                                Command.Obrabot(data.IdPols, data);
+
+
 
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine($@"1. ID пользователя: {Variables.IdPols}. {"\n"}2. id беседы: {Variables.IdPolsBes}. {"\n"}3. id сообщений: {Variables.IdMes}. {"\n"}4. Время сообщения: {Variables.Time}. {"\n"}5. Сообщение: {Variables.Title}");
+                                Console.WriteLine($@"1. ID пользователя: {data.IdPols}. {"\n"}2. id беседы: {data.IdPolsBes}. {"\n"}3. id сообщений: {data.IdMes}. {"\n"}4. Время сообщения: {data.Time}. {"\n"}5. Сообщение: {data.Title}");
                             }
                             }
 
@@ -166,5 +172,7 @@ namespace TestBot.Rabota
             }
 
         }
+        
+        
     }
 }

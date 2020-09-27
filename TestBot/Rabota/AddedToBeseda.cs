@@ -29,8 +29,8 @@ namespace TestBot.Rabota
             reqParams["dont_parse_links"] = 0;
             //reqParams["attachment"] = "photo-185711407_457239065";
             reqParams["forward_messages"] = "";
-            reqParams["access_token"] = Variables.Token;
-            reqParams["v"] = Variables.v;
+            reqParams["access_token"] = Variables_Static.Token;
+            reqParams["v"] = Variables_Static.v;
             string response = danni.Post("https://api.vk.com/method/messages.send?", reqParams).ToString();
 
 

@@ -62,7 +62,7 @@ namespace TestBot.Rabota
         //static async v connectdb()
         //{
         //    myConnection = new SQLiteConnection("Data Source=database.sqlite3");
-        //    myConnection.Open();
+        //    myConnection.OpenAsync();
         //}
 
 
@@ -81,7 +81,7 @@ namespace TestBot.Rabota
                 }
                 string query = "UPDATE online SET live = @richi WHERE name = 'richi'; UPDATE online SET live = @nemesis WHERE name = 'nemesis'; UPDATE online SET live = @elevator WHERE name = 'elevator'; UPDATE online SET live = @elevator1 WHERE name = 'elevator1'; UPDATE online SET live = @elevator2 WHERE name = 'elevator2'; UPDATE online SET live = @rofl WHERE name = 'rofl'; UPDATE online SET live = @docent WHERE name = 'docent'; UPDATE online SET live = @nathan WHERE name = 'nathan'";
                 SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
-                myConnection.Open();
+                myConnection.OpenAsync();
                 myCommand.Parameters.AddWithValue("@richi", richi);
                 myCommand.Parameters.AddWithValue("@nemesis", nemesis);
                 myCommand.Parameters.AddWithValue("@elevator", elevator);
@@ -140,7 +140,7 @@ namespace TestBot.Rabota
             string query = "SELECT live FROM online WHERE name = 'richi'";
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-            myConnection.Open();
+            myConnection.OpenAsync();
 
             SQLiteDataReader result = myCommand.ExecuteReader();
             var onlineList = new List<string>();
@@ -169,7 +169,8 @@ namespace TestBot.Rabota
                 if (richi == "1")
                 {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("На канале Ричи пошло развитие!" + "\n" + "https://www.twitch.tv/richiking", "photo-195044271_457239019");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "На канале Ричи пошло развитие!" + "\n" + "https://www.twitch.tv/richiking", "photo-195044271_457239019");
                 }
 
             }
@@ -202,7 +203,7 @@ namespace TestBot.Rabota
             string query = "SELECT live FROM online WHERE name = 'nemesis'";
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-            myConnection.Open();
+            myConnection.OpenAsync();
 
             SQLiteDataReader result = myCommand.ExecuteReader();
             var onlineList = new List<string>();
@@ -231,7 +232,8 @@ namespace TestBot.Rabota
                 if (nemesis == "1")
                 {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("Змирля запустила поток" + "\n" + "https://www.twitch.tv/nemesis_tv", "photo-195044271_457239018");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "Змирля запустила поток" + "\n" + "https://www.twitch.tv/nemesis_tv", "photo-195044271_457239018");
                 }
 
             }
@@ -264,7 +266,7 @@ namespace TestBot.Rabota
             string query = "SELECT live FROM online WHERE name = 'elevator'";
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-            myConnection.Open();
+            myConnection.OpenAsync();
 
             SQLiteDataReader result = myCommand.ExecuteReader();
             var onlineList = new List<string>();
@@ -293,7 +295,8 @@ namespace TestBot.Rabota
                 if (elevator == "1")
                 {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("Некий B.V стартанул поток на твиче" + "\n" + "https://www.twitch.tv/nemesis_sin_gavna", "photo-195044271_457239022");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "Некий B.V стартанул поток на твиче" + "\n" + "https://www.twitch.tv/nemesis_sin_gavna", "photo-195044271_457239022");
                 }
 
             }
@@ -334,7 +337,7 @@ namespace TestBot.Rabota
         string query = "SELECT live FROM online WHERE name = 'elevator1'";
         SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-        myConnection.Open();
+        myConnection.OpenAsync();
 
         SQLiteDataReader result = myCommand.ExecuteReader();
         var onlineList = new List<string>();
@@ -363,7 +366,8 @@ namespace TestBot.Rabota
             if (elevator1 == "1")
             {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("Виталя вышел в эфир на ЮТУБЕ!" + "\n" + "https://www.youtube.com/channel/UCPASCsJ6ISdHhQtv6vv5gYQ", "photo-195044271_457239022");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "Виталя вышел в эфир на ЮТУБЕ!" + "\n" + "https://www.youtube.com/channel/UCPASCsJ6ISdHhQtv6vv5gYQ", "photo-195044271_457239022");
             }
 
         }
@@ -395,7 +399,7 @@ namespace TestBot.Rabota
             string query = "SELECT live FROM online WHERE name = 'elevator2'";
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-            myConnection.Open();
+            myConnection.OpenAsync();
 
             SQLiteDataReader result = myCommand.ExecuteReader();
             var onlineList = new List<string>();
@@ -424,7 +428,8 @@ namespace TestBot.Rabota
                 if (elevator2 == "1")
                 {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("Некий B.V стартанул поток на твиче" + "\n" + "https://www.twitch.tv/elevator_king", "photo-195044271_457239022");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "Некий B.V стартанул поток на твиче" + "\n" + "https://www.twitch.tv/elevator_king", "photo-195044271_457239022");
                 }
 
             }
@@ -457,7 +462,7 @@ namespace TestBot.Rabota
             string query = "SELECT live FROM online WHERE name = 'rofl'";
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-            myConnection.Open();
+            myConnection.OpenAsync();
 
             SQLiteDataReader result = myCommand.ExecuteReader();
             var onlineList = new List<string>();
@@ -486,7 +491,8 @@ namespace TestBot.Rabota
                 if (rofl == "1")
                 {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("ROFL стартанул на твиче" + "\n" + "https://www.twitch.tv/irofl", "photo-195044271_457239023");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "ROFL стартанул на твиче" + "\n" + "https://www.twitch.tv/irofl", "photo-195044271_457239023");
                 }
 
             }
@@ -519,7 +525,7 @@ namespace TestBot.Rabota
             string query = "SELECT live FROM online WHERE name = 'docent'";
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-            myConnection.Open();
+            myConnection.OpenAsync();
 
             SQLiteDataReader result = myCommand.ExecuteReader();
             var onlineList = new List<string>();
@@ -548,7 +554,8 @@ namespace TestBot.Rabota
                 if (docent == "1")
                 {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("DOCENT запустился на твиче" + "\n" + "https://www.twitch.tv/cvrnvgge4444/", "photo-195044271_457239024");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "DOCENT запустился на твиче" + "\n" + "https://www.twitch.tv/cvrnvgge4444/", "photo-195044271_457239024");
                 }
 
             }
@@ -581,7 +588,7 @@ namespace TestBot.Rabota
             string query = "SELECT live FROM online WHERE name = 'nathan'";
             SQLiteCommand myCommand = new SQLiteCommand(query, myConnection);
 
-            myConnection.Open();
+            myConnection.OpenAsync();
 
             SQLiteDataReader result = myCommand.ExecuteReader();
             var onlineList = new List<string>();
@@ -610,7 +617,8 @@ namespace TestBot.Rabota
                 if (nathan == "1")
                 {
                     Rabota.MessageSendStream MesSend = new Rabota.MessageSendStream();
-                    MesSend.Send("NathanGtq начал развиваться на твиче" + "\n" + "https://www.twitch.tv/nathangtq", "photo-195044271_457239025");
+                    Variables data = new Variables();
+                    MesSend.Send(data, "NathanGtq начал развиваться на твиче" + "\n" + "https://www.twitch.tv/nathangtq", "photo-195044271_457239025");
                 }
 
             }

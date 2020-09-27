@@ -13,20 +13,20 @@ namespace TestBot.Rabota.Vk.Messages
     {
         public static string Im = "153171922";
        public static HttpRequest request = new HttpRequest();
-        public static string GetUserMessage()
+        public static string GetUserMessage(Variables data)
         {
             
             Rabota.MessageSend MesSend = new Rabota.MessageSend();
             RequestParams reqParams = new RequestParams();
             reqParams["peer_id"] = 2000000003;
             reqParams["fields"] = "id";
-            reqParams["access_token"] = Variables.Token;
-            reqParams["v"] = Variables.v;
+            reqParams["access_token"] = data.Token;
+            reqParams["v"] = data.v;
             string response = request.Get("https://api.vk.com/method/messages.getConversationMembers?", reqParams).ToString();
             JObject json = JObject.Parse(response);
             if (response.Contains("error"))
             {
-                MesSend.Send("Для этой команды мне нужны права администратора");
+                MesSend.Send(data, "Для этой команды мне нужны права администратора");
             }else
             { 
          
@@ -42,7 +42,7 @@ namespace TestBot.Rabota.Vk.Messages
             int count1 = (Convert.ToInt32(json["response"]["count"]));
                 if ((count1 - razmer) <= 0)
                 {
-                    MesSend.Send("Вы один в беседе");
+                    MesSend.Send(data, "Вы один в беседе");
                 }
                 else
                 {
@@ -75,10 +75,10 @@ namespace TestBot.Rabota.Vk.Messages
         }
 
        
-        public static string ciroz()
+        public static string ciroz(Variables data)
         {
             Rabota.MessageSend MesSend = new Rabota.MessageSend();
-            MesSend.Send("");
+            MesSend.Send(data, "");
             return "";
         }
     }

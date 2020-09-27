@@ -12,7 +12,7 @@ namespace TestBot.Rabota
 {
     class MessageSendStream
     {
-        public void Send(string Message, string Media = "")
+        public void Send(Variables data, string Message, string Media = "")
         {
             var danni = new HttpRequest();
             danni.Cookies = new CookieDictionary();
@@ -21,16 +21,15 @@ namespace TestBot.Rabota
 
             RequestParams reqParams = new RequestParams();
             reqParams["message"] = Message;
-            reqParams["peer_id"] = 2000000003; //+1
+            reqParams["peer_id"] = 2000000004; //+1
             reqParams["dont_parse_links"] = 0;
             reqParams["attachment"] = Media;
             reqParams["forward_messages"] = "";
-            reqParams["access_token"] = Variables.Token;
-            reqParams["v"] = Variables.v;
+            reqParams["access_token"] = Variables_Static.Token;
+            reqParams["v"] = Variables_Static.v;
             string response = danni.Post("https://api.vk.com/method/messages.send?", reqParams).ToString();
 
-            Random rn = new Random();
-            Thread.Sleep(rn.Next(1000, 2000));
+           
 
             if(response.Contains("error"))
             {
@@ -48,11 +47,11 @@ namespace TestBot.Rabota
                     reqParams["message"] = Message;
                     reqParams["captcha_key"] = captcha_key;
                     reqParams["message"] = json["error"]["captcha_sid"].ToString();
-                    reqParams["peer_id"] = Variables.IdPolsBes;
+                    reqParams["peer_id"] = data.IdPolsBes;
                     reqParams["attachment"] = Media;
-                    reqParams["forward_messages"] = Variables.IdMes;
-                    reqParams["access_token"] = Variables.Token;
-                    reqParams["v"] = Variables.v;
+                    reqParams["forward_messages"] = data.IdMes;
+                    reqParams["access_token"] = Variables_Static.Token;
+                    reqParams["v"] = Variables_Static.v;
                     response = danni.Post("https://api.vk.com/method/messages.send?", reqParams).ToString();
 
 
